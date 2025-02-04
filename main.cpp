@@ -36,9 +36,12 @@ int main()
     strcpy(student1.name,"Vacy");
     Man student2("Koly",20,2300);
     Man student3("Grisha",19,2300);
-    //student1.print();
-   // student2.print();
- //   student3.print();
+    student1.print();
+    student2.print();
+    student3.print();
+
+    //initialization on declaration
+    printf("\n initialization on declaration\n");
     Man student4={"Masha",15,0};
     Man gr[4]= {student1,student2,student3,student4};
     for(Man x:gr)x.print();
