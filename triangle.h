@@ -13,6 +13,8 @@ public:
     Triangle();
     Triangle(Point p1, Point p2, Point p3);
     Triangle(const Triangle& p);
+    Triangle& operator=(const Triangle& p);
+    bool operator>(Triangle& t);
     double square();
     double perimeter();
     int contains(const Point& p);

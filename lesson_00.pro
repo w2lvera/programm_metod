@@ -10,7 +10,8 @@ SOURCES += main.cpp \
 HEADERS += \
     point.h \
     triangle.h \
-    vector.h
+    vector.h \
+    sort.h
 
 DISTFILES += \
     picture.jpg

@@ -18,6 +18,15 @@ Triangle::Triangle(const Triangle& p)
     p2 = p.p2;
     p3 = p.p3;
 }
+Triangle& Triangle::operator =(const Triangle& p){
+    p1 = p.p1;
+    p2 = p.p2;
+    p3 = p.p3;
+    return *this;
+}
+bool Triangle::operator >( Triangle& t){
+    return this->square()>t.square();
+}
 double Triangle::square(){
     double s = fabs((p1.x-p3.x)*(p2.y-p3.y)-(p1.y-p3.y)*(p2.x-p3.x))*0.5;
     return s;
