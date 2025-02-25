@@ -89,13 +89,13 @@ int main()
     ifstream in("c:\\Users\\Vera\\Documents\\lesson_00\\text.txt");
     if(!in)cout<<"\nfile not open\n";
     //read all int from file
-//    int a1,s=0;
-//    while(in>>a1) {
-//        cout<<a1<<" ";
-//        s+=a;
-//    }
-//    if(in.eof()) cout<<"\n s = "<<s;
-//    else cout<<"error in file";
+    int a1,s=0;
+    while(in>>a1) {
+        cout<<a1<<" ";
+        s+=a;
+    }
+    if(in.eof()) cout<<"\n s = "<<s;
+    else cout<<"error in file";
     //read all students from text file
     Man gr[5];
     ifstream in1("c:\\Users\\Vera\\Documents\\lesson_00\\student.txt");
@@ -115,7 +115,7 @@ int main()
 //        cout<<gr1[i]<<"\n";
 //    inBin.close();
     fstream inOutBin;
-    inOutBin.open("student.bin",ios_base::binary|ios_base::in|ios_base::out);
+    inOutBin.open("student.bin",ios_base::binary|ios_base::in|ios_base::out|ios_base::ate);
     if(!inOutBin)cout<<"\nfile not open\n";
     inOutBin.seekg(sizeof(Man)*2,ios_base::beg);
     Man help;
@@ -123,7 +123,7 @@ int main()
     cout<<"\n help\n"<<help<<"\n";
     help.pay+=10000;
     inOutBin.seekp(sizeof(Man)*2,ios_base::beg);
-    inOutBin.write((char*)&help,sizeof(Man));
+    inOutBin.write(reinterpret_cast<char*>(&help),sizeof(Man));
     inOutBin.close();
     ifstream inBin("student.bin",ios::binary);
     Man gr1[5];
