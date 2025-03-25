@@ -1,9 +1,11 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 
 #include <string.h>
-
+#include "sort.h"
+#include "sortComp.h"
 
 class Man{
 public:
@@ -23,31 +25,53 @@ public:
         age = m.age;
         pay = m.pay;
     }
+    Man& operator=(const Man& m){
+        strcpy(name,m.name);
+        age = m.age;
+        pay = m.pay;
+        return *this;
+    }
+
+    bool operator<(const Man& m){
+        return strcmp(name,m.name)<0;
+    }
+    bool operator>(const Man& m){
+        return strcmp(name,m.name)>0;
+    }
     //class metod
-    void print(){
-        printf("%10s   %4d  %d\n", name, age, pay);
+    friend ostream& operator<<(ostream& os, const Man m){
+        return os<<m.name<<" "<<m.age<<" "<<m.pay;
+    }
+    static bool compAge(Man& m1,  Man& m2){
+        return m1.age<m2.age;
+    }
+    static bool compPay(Man& m1,  Man& m2){
+        return m1.pay<m2.pay;
     }
 };
+template <class T>
+void printArr(T*a,int n){
+    for(int i = 0;i<n;i++)
+        std::cout<<a[i]<<" ";
+}
+bool compInt(int& a, int& b){
+    return a<b;
+}
+
 int main()
 {
-    Man student1;//student1 - object or class instance
-    student1.age =18;
-    student1.pay = 0;
-    strcpy(student1.name,"Vacy");
-    Man student2("Koly",20,2300);
-    Man student3("Grisha",19,2300);
-    student1.print();
-    student2.print();
-    student3.print();
-
-    //initialization on declaration
-    printf("\n initialization on declaration\n");
-    Man student4={"Masha",15,0};
-    Man gr[4]= {student1,student2,student3,student4};
-    for(Man x:gr)x.print();
-    Man gr11[3]= {{"s1",15,0},{"s2",19,0},{"s3", 20,2300}};
-    printf("\n gr11 print \n");
-    for(Man x:gr11) x.print();
-   // printf("%s  %d  %d",student1.name, student1.age, student1.pay);
+    Man gr11[4]= {{"s2",25,5000},{"s1",19,10},{"s0", 21,2305},{"a0", 20,2300}};
+    cout<<"\n gr11 print \n";
+    for(Man x:gr11) cout<<x<<"\n";
+//    insert(gr11,4,Man::compPay);
+    qs(gr11,0,3,Man::compAge);
+ //   qs(gr11,0,3);
+//   insert(gr11,4);
+    cout<<"\n gr11 print after sort\n";
+    for(Man x:gr11) cout<<x<<"\n";
+//    int arr[8]={42,55,12,44,94,18,6,67};
+//    shell(arr,8,compInt);
+//    qs(arr,0,7,compInt);
+//    printArr(arr,8);
     return 0;
 }
