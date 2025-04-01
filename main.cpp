@@ -2,52 +2,46 @@
 using namespace std;
 
 
-#include <string.h>
+const int m = 10;
+void createHashTable(int hashTable[][2],int in[6][2],int n){
+    int j;
+    for(int i=0;i<m;i++)hashTable[i][0] = -1;
+    for(int i=0;i<n;i++){
+        int i1 = 0;
+        int k = in[i][0];
+        while(true){
+            j = (k+i1*i1)%m;
+            if(hashTable[j][0]== -1)break;
+            i1++;
+        }
+        hashTable[j][0] = k;
+        hashTable[j][1] = in[i][1];
+    }
+}
+int search(int hashTable[][2], int key){
+    int i1 = 0;
+    int j;
+    while(true){
+        j = (key+i1*i1)%m;
+        if(hashTable[j][0]== key)break;
+        i1++;
+    }
 
-
-class Man{
-public:
-    //class data
-    char name[20]="";
-    int age=0;
-    int pay=0;
-    //constructor
-    Man(){}//default constructor
-    Man(const char* n, int a,int p){//constructor with parameters
-        strcpy(name,n);
-        age = a;
-        pay = p;
-    }
-    Man(Man& m){
-        strcpy(name,m.name);
-        age = m.age;
-        pay = m.pay;
-    }
-    //class metod
-    void print(){
-        printf("%10s   %4d  %d\n", name, age, pay);
-    }
-};
+   return  hashTable[j][1];
+}
 int main()
 {
-    Man student1;//student1 - object or class instance
-    student1.age =18;
-    student1.pay = 0;
-    strcpy(student1.name,"Vacy");
-    Man student2("Koly",20,2300);
-    Man student3("Grisha",19,2300);
-    student1.print();
-    student2.print();
-    student3.print();
-
-    //initialization on declaration
-    printf("\n initialization on declaration\n");
-    Man student4={"Masha",15,0};
-    Man gr[4]= {student1,student2,student3,student4};
-    for(Man x:gr)x.print();
-    Man gr11[3]= {{"s1",15,0},{"s2",19,0},{"s3", 20,2300}};
-    printf("\n gr11 print \n");
-    for(Man x:gr11) x.print();
-   // printf("%s  %d  %d",student1.name, student1.age, student1.pay);
+    int in[6][2]={2002,0,1914,1,1939,2,1945,3,1953,4,1944,5};
+    for(int i=0;i<6;i++){
+        cout<<in[i][0]<<" "<< in[i][1]<<"\n";
+    }
+    cout<<"\n";
+    int hashTable[m][2];
+    createHashTable(hashTable,in,6);
+    for(int i=0;i<m;i++){
+        cout<<hashTable[i][0]<<" "<< hashTable[i][1]<<"\n";
+    }
+    int index = search(hashTable,1944);
+    cout<<"index = "<<index;
     return 0;
 }
