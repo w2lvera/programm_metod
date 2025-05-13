@@ -84,11 +84,21 @@ private:
         if(x<root->info)return findNode(root->left,x);
         if(x>root->info)return findNode(root->right,x);
     }
+    void destroyTree(T* root) {
+            if (root != nullptr) {
+                destroyTree(root->left);
+                destroyTree(root->right);
+                delete root;
+            }
+        }
 
 public:
     Tree(){}
     Tree(const Tree& t){
         RootLR(t.root);
+    }
+    ~Tree(){
+        destroyTree(root);
     }
     void add(G x){
         addEll(root,x);
