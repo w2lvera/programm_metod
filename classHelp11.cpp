@@ -32,18 +32,36 @@ int main()
     while (in >> gr[n])n++;
     for (Man m : gr)
         cout << m << "\n";
-    ofstream of = ofstream("man.bin");
+    //пишем двоичный файл
+    ofstream of = ofstream("man.bin", ios::binary|ios::ate);
     of.write((char*)gr, n * sizeof(Man));
     of.close();
-    ifstream in1 = ifstream("man.bin");
+    //читаем двоичный файл
+    ifstream in1 = ifstream("man.bin", ios::binary | ios::ate);
     //длина файла
     in1.seekg(0, in1.end);//устанавливает указатель файла в конец
     int dl_fila = in1.tellg();
     //кол-во записей
+    int k = sizeof(Man);
     int nZ = dl_fila / sizeof(Man);
+    in1.seekg(0, 0);
     Man* arr = new Man[nZ];
     in1.read((char*)arr, nZ * sizeof(Man));
-        
+    in1.close();
+    for (int i = 0; i < nZ; i++)
+        cout << arr[i] << "\n";
+    fstream in2 = fstream("man.bin", ios_base::binary |
+        ios_base::ate|ios_base::in|ios_base::out);
+    in2.seekg(sizeof(Man), ios_base::beg);
+    Man man;
+    in2.read((char*)&man, sizeof(Man));
+    cout << man;
+    int age = man.getAge();
+    man.setAge(age + 1);
+    man.setName("katy");
+    in2.seekp(sizeof(Man), ios_base::beg);
+    in2.write((char*)&man, sizeof(Man));
+    in2.close();
 }
     //Man student("Vacy",19,3300);
     //Man student1("Koly", 19, 0);

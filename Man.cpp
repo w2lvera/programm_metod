@@ -25,6 +25,21 @@ Man::~Man()
 	//std::cout << "destructor\n";
 }
 
+void Man::setName(const char* name)
+{
+	strcpy_s(this->name, 50, name);
+}
+
+void Man::setAge(int age)
+{
+	this->age = age;
+}
+
+int Man::getAge()
+{
+	return age;
+}
+
 
 bool Man::compMan(Man b)
 {
