@@ -25,21 +25,41 @@ void boobleSort(T* a, int n) {
 }
 int main()
 {
-    Man student("Vacy",19,3300);
-    Man student1("Koly", 19, 0);
-    Man gr[8] = { {"Ivanov",19,3300},{"Petrov",19,3300},{"Pushkin",19,3300},
-        {"Kalinin",19,3300},{"Abramov",19,3300},{"Sidorov",19,3300},
-        {"Ivanova",19,3300},{"Petrova",19,3300} };
-    for (Man m : gr) {
-        m.print();
-    }
-    boobleSort(gr, 8);
-    std::cout << "\n after sort\n";
-    for (Man m : gr) {
-        m.print();
-    }
-    // bool b = student.compMan( student1);
-    student = student1=student2;
+    ifstream in = ifstream("text.txt");
+    if (!in) return 1;
+    Man gr[10];
+    int n = 0;
+    while (in >> gr[n])n++;
+    for (Man m : gr)
+        cout << m << "\n";
+    ofstream of = ofstream("man.bin");
+    of.write((char*)gr, n * sizeof(Man));
+    of.close();
+    ifstream in1 = ifstream("man.bin");
+    //длина файла
+    in1.seekg(0, in1.end);//устанавливает указатель файла в конец
+    int dl_fila = in1.tellg();
+    //кол-во записей
+    int nZ = dl_fila / sizeof(Man);
+    Man* arr = new Man[nZ];
+    in1.read((char*)arr, nZ * sizeof(Man));
+        
+}
+    //Man student("Vacy",19,3300);
+    //Man student1("Koly", 19, 0);
+    //Man gr[8] = { {"Ivanov",19,3300},{"Petrov",19,3300},{"Pushkin",19,3300},
+    //    {"Kalinin",19,3300},{"Abramov",19,3300},{"Sidorov",19,3300},
+    //    {"Ivanova",19,3300},{"Petrova",19,3300} };
+    //for (Man m : gr) {
+    //    m.print();
+    //}
+    //boobleSort(gr, 8);
+    //std::cout << "\n after sort\n";
+    //for (Man m : gr) {
+    //    m.print();
+    //}
+    //// bool b = student.compMan( student1);
+    //student = student1=student2;
     //std::cout << "\n compMan " << b << "\n";
     /*int a;
     int b1;
@@ -58,7 +78,7 @@ int main()
     //std::cout << student.name << " " << student.age << " " << student.pay << "\n";
    // std::cout << prepod.name << " " << prepod.age << " " << prepod.pay << "\n";
     
-}
+
 // Student - объект типа Man или экземпляр класса Man или instance of Man
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
