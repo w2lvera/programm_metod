@@ -15,27 +15,29 @@ Man::Man() {
 	pay = 0;
 	std::cout << "empty constructor\n";
 }
+Man::Man(const Man& m) {
+	strcpy_s(this->name, m.name);
+	this->age = m.age;
+	this->pay = m.pay;
+}
 Man::~Man()
 {
 	//std::cout << "destructor\n";
 }
-void Man::print()
-{
-	std::cout << name << " " << age << " " << pay << "\n";
-}
+
 
 bool Man::compMan(Man b)
 {
 	return this->pay > b.pay;
 }
 
-bool Man::operator>(Man b)
+bool Man::operator>(const Man& b)
 {
 	return strcmp(this->name, b.name) > 0;
 	
 }
 
-Man Man::operator = (Man b)
+Man& Man::operator = (const Man& b)
 {
 	strcpy_s(this->name, b.name);
 	this->age = b.age;
