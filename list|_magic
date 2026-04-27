@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+using namespace std;
+template <class T>
+struct Node{
+    T info;
+    Node* next;
+    Node(T info):info(info),next(NULL){}
+    Node():next(NULL){}
+    Node(T info,Node* next):info(info),next(next){}
+    friend ostream& operator<<(ostream& os, Node* h) {
+                return os << h->info;
+            }
+};
+template <class T>
+T delNextNode(Node<T>*& head, Node<T>* curr){
+    T help;
+    if(curr->next==curr)return curr->info;
+    Node<T>* del = curr->next;
+    if(curr->next==head) head = del->next;
+    curr->next=curr->next->next;
+    help = del->info;
+    delete del;
+    return help;
+}
+template <class T>
+void printRing( Node<T>* h) {
+    Node<T>* circle = h;
+    cout<<h<<" <- ";
+    for(Node<T>* t=h->next;t!=circle;t=t->next)
+        cout<<t<<" <- ";
+
+}
+template <class T>
+void del_every_third(Node<T>* h, string* delMagic){
+
+    int i = 0;
+    for(Node<T>* t = h->next->next;i<12;t=t->next->next){
+       delMagic[i]= delNextNode(h,t);
+       cout<<"\n ring "<<i<<"\n";
+       printRing(h);
+       cout<<"          del magic = "<< delMagic[i];
+       i++;
+
+    }
+}
+int main()
+{
+
+    string magic[]{"vacy","pety","koly","fedy","kiril","vany","yuri","dima","sasha","nikita","pavel","igor"}
+    ;
+    string delMagic[12];
+    int n = 12;
+    Node<string>* head =NULL;
+    Node<string>* tail=NULL;
+    Node<string>* circle;
+    for(int i = 0;i<n; i++){
+        head=new Node<string>(magic[i],tail);
+        if(tail==NULL)circle = head;
+        tail = head;
+    }
+    circle->next = tail;
+    printRing(head);
+    del_every_third(head, delMagic);
+    return 0;
+}
