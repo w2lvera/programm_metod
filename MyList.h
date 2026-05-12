@@ -1,0 +1,64 @@
+#pragma once
+#include <fstream>
+using namespace std;
+template <class T>
+class MyList
+{
+
+    class Node {
+    public:
+        T info;
+        Node* next;
+        Node() { next = NULL; }
+        Node(T info, Node* next=NULL):info(info),
+        next(next) { }
+       // Node(T info) :info(info), next(NULL) {}
+        friend ostream& operator<<(ostream& os, Node*& n) {
+            return os << n->info;
+        }
+        ~Node() {
+            
+        }
+    };
+    public:
+    Node* head = NULL;
+    Node* tail = NULL;
+    void addEnd(T t) {
+        Node* newNode = new Node(t);
+        if (head == NULL)
+            head = tail = newNode;
+        else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+    void addBegin(T t) {
+        Node* newNode = new Node(t);
+        if (head == NULL)
+            head = tail = newNode;
+        else {
+            newNode->next = head;
+            head = newNode;
+        }
+    }
+    int deleteNode(T del) {
+        if (head->info == del) head = head->next;
+        else {
+            Node* h = NULL;
+            Node* temp = NULL;
+            for (h = head; h->next && h->next->info != del;
+                h=h->next);
+            if (h->next == NULL) return -1;
+            temp = h->next;
+            h->next = temp->next;
+            delete temp;
+            return 0;
+        }
+    }
+    friend ostream& operator<<(ostream& os, MyList& list) {
+        for (Node* node = list.head; node; node = node->next)
+            os << node << "-->";
+        return os;
+    }
+};
+
